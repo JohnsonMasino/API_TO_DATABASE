@@ -1,22 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Action\Candidate;
+namespace App\Http\Requests;
 
-use App\Http\Requests\RegistrationRequest;
-use App\Http\Resources\CandidateResource;
-use App\Models\User;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
 
-class RegistrationAction
+class RegistrationRequest extends FormRequest
 {
-    public function handle(RegistrationRequest $request)
+    public function authorize(): bool
     {
-        $candidate = Candidate::query()->create($request->validated());
-        $candidate->login();
-        return successfulResponse([
-            'data' => [
-                'user' => new CandidateResource($candidate)
-            ]
-        ], 'New User added', ResponseAlias::HTTP_CREATED);
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email', 'unique:candidates'],
+            'password' => ['required', 'string', 'min:8'],
+            'confirm_password' => ['required', 'same:password']
+        ];
     }
 }
