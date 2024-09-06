@@ -19,7 +19,7 @@ class LoginAction
                 'data' => [
                     'user' => new UserResource($user)
                 ]
-            ], 'Login successful');
+            ], 'you are logged in!');
         }
 
         return errorResponse('Wrong Credentials !, Try again.', ResponseAlias::HTTP_BAD_REQUEST);
