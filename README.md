@@ -1,6 +1,7 @@
 # API to Database
 
 This project contains the APIs that collect data from the frontend and save it to the database.
+Ensures appropriate communication between the frontend and the database.
 
 ## Overview
 
